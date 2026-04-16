@@ -10,7 +10,12 @@
     "./react": "./react.js",
     "./node": "./node.js"
   },
-  "files": ["base.js", "next.js", "react.js", "node.js"],
+  "files": [
+    "base.js",
+    "next.js",
+    "react.js",
+    "node.js"
+  ],
   "peerDependencies": {
     "eslint": "^9.14.0",
     "typescript": "^5.6.3"

@@ -10,38 +10,35 @@
 
 :root {
   /* ─── Color — neutral ramp ─────────────────────────────── */
-  --pg-neutral-0: oklch(99% 0 0);
-  --pg-neutral-50: oklch(96% 0.003 255);
-  --pg-neutral-100: oklch(92% 0.005 255);
-  --pg-neutral-200: oklch(85% 0.007 255);
-  --pg-neutral-300: oklch(74% 0.009 255);
-  --pg-neutral-400: oklch(60% 0.011 255);
-  --pg-neutral-500: oklch(48% 0.013 255);
-  --pg-neutral-600: oklch(38% 0.015 255);
-  --pg-neutral-700: oklch(28% 0.017 255);
-  --pg-neutral-800: oklch(20% 0.017 255);
-  --pg-neutral-900: oklch(14% 0.015 255);
-  --pg-neutral-1000: oklch(8% 0.012 255);
+  --pg-neutral-0: oklch(99% 0 0deg);
+  --pg-neutral-50: oklch(96% 0.003 255deg);
+  --pg-neutral-100: oklch(92% 0.005 255deg);
+  --pg-neutral-200: oklch(85% 0.007 255deg);
+  --pg-neutral-300: oklch(74% 0.009 255deg);
+  --pg-neutral-400: oklch(60% 0.011 255deg);
+  --pg-neutral-500: oklch(48% 0.013 255deg);
+  --pg-neutral-600: oklch(38% 0.015 255deg);
+  --pg-neutral-700: oklch(28% 0.017 255deg);
+  --pg-neutral-800: oklch(20% 0.017 255deg);
+  --pg-neutral-900: oklch(14% 0.015 255deg);
+  --pg-neutral-1000: oklch(8% 0.012 255deg);
 
   /* ─── Color — accent + signals ────────────────────────── */
-  --pg-accent-50: oklch(97% 0.025 250);
-  --pg-accent-100: oklch(92% 0.05 250);
-  --pg-accent-300: oklch(78% 0.12 250);
-  --pg-accent-500: oklch(62% 0.18 250);
-  --pg-accent-700: oklch(48% 0.15 250);
-  --pg-accent-900: oklch(32% 0.11 250);
-
-  --pg-success: oklch(68% 0.16 155);
-  --pg-warning: oklch(78% 0.16 85);
-  --pg-danger: oklch(60% 0.21 25);
-  --pg-info: oklch(70% 0.14 230);
+  --pg-accent-50: oklch(97% 0.025 250deg);
+  --pg-accent-100: oklch(92% 0.05 250deg);
+  --pg-accent-300: oklch(78% 0.12 250deg);
+  --pg-accent-500: oklch(62% 0.18 250deg);
+  --pg-accent-700: oklch(48% 0.15 250deg);
+  --pg-accent-900: oklch(32% 0.11 250deg);
+  --pg-success: oklch(68% 0.16 155deg);
+  --pg-warning: oklch(78% 0.16 85deg);
+  --pg-danger: oklch(60% 0.21 25deg);
+  --pg-info: oklch(70% 0.14 230deg);
 
   /* ─── Typography ─────────────────────────────────────── */
   --pg-font-sans: "Inter Variable", "Inter", system-ui, sans-serif;
-  --pg-font-serif: "EB Garamond Variable", "EB Garamond", Georgia, serif;
-  --pg-font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace,
-    monospace;
-
+  --pg-font-serif: "EB Garamond Variable", "EB Garamond", georgia, serif;
+  --pg-font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, monospace;
   --pg-text-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);
   --pg-text-sm: clamp(0.875rem, 0.85rem + 0.2vw, 0.9375rem);
   --pg-text-base: clamp(1rem, 0.95rem + 0.25vw, 1.0625rem);
@@ -51,17 +48,14 @@
   --pg-text-3xl: clamp(2.25rem, 1.6rem + 2.6vw, 3.25rem);
   --pg-text-4xl: clamp(3rem, 1.8rem + 4.8vw, 5rem);
   --pg-text-hero: clamp(3.5rem, 1rem + 9vw, 8rem);
-
   --pg-weight-regular: 400;
   --pg-weight-medium: 500;
   --pg-weight-semibold: 600;
   --pg-weight-bold: 700;
-
   --pg-leading-tight: 1.1;
   --pg-leading-snug: 1.25;
   --pg-leading-normal: 1.5;
   --pg-leading-relaxed: 1.7;
-
   --pg-tracking-tighter: -0.03em;
   --pg-tracking-tight: -0.015em;
   --pg-tracking-normal: 0;
@@ -95,10 +89,10 @@
   --pg-radius-pill: 9999px;
 
   /* ─── Shadow ─────────────────────────────────────────── */
-  --pg-shadow-sm: 0 1px 2px 0 oklch(0% 0 0 / 6%);
-  --pg-shadow-md: 0 4px 12px -2px oklch(0% 0 0 / 10%);
-  --pg-shadow-lg: 0 12px 40px -4px oklch(0% 0 0 / 14%);
-  --pg-shadow-focus: 0 0 0 3px oklch(62% 0.18 250 / 35%);
+  --pg-shadow-sm: 0 1px 2px 0 oklch(0% 0 0deg / 6%);
+  --pg-shadow-md: 0 4px 12px -2px oklch(0% 0 0deg / 10%);
+  --pg-shadow-lg: 0 12px 40px -4px oklch(0% 0 0deg / 14%);
+  --pg-shadow-focus: 0 0 0 3px oklch(62% 0.18 250deg / 35%);
 
   /* ─── Motion ─────────────────────────────────────────── */
   --pg-duration-instant: 80ms;
@@ -106,7 +100,6 @@
   --pg-duration-normal: 240ms;
   --pg-duration-slow: 400ms;
   --pg-duration-deliberate: 720ms;
-
   --pg-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --pg-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --pg-ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);

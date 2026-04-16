@@ -18,13 +18,13 @@ Design spec complete. Implementation plan approved. MVP targeted in 8 weeks.
 
 ## Architecture (at a glance)
 
-| Component | Stack |
-|---|---|
-| SDK (`@pgpilot/sdk`) | TypeScript, tsup, native `fetch` |
-| Orchestrator | Kotlin 2.x, Spring Boot 3, Java 21 virtual threads, Flyway |
-| API + Webhook Gateway | NestJS 11, Drizzle, Clerk |
-| Dashboard | Next.js 16, React 19, SCSS Modules, Radix, Motion |
-| Only infra dep | PostgreSQL 14+ |
+| Component             | Stack                                                      |
+| --------------------- | ---------------------------------------------------------- |
+| SDK (`@pgpilot/sdk`)  | TypeScript, tsup, native `fetch`                           |
+| Orchestrator          | Kotlin 2.x, Spring Boot 3, Java 21 virtual threads, Flyway |
+| API + Webhook Gateway | NestJS 11, Drizzle, Clerk                                  |
+| Dashboard             | Next.js 16, React 19, SCSS Modules, Radix, Motion          |
+| Only infra dep        | PostgreSQL 14+                                             |
 
 ## Repo
 

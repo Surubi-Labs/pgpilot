@@ -1,6 +1,6 @@
-import globals from "globals";
 import reactPlugin from "eslint-plugin-react";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
+import globals from "globals";
 
 import { baseConfig } from "./base.js";
 

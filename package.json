@@ -18,8 +18,11 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint --",
-    "lint:fix": "turbo run lint -- --fix",
+    "lint": "pnpm run lint:prettier && pnpm run lint:eslint && pnpm run lint:stylelint",
+    "lint:eslint": "eslint . --max-warnings 0",
+    "lint:stylelint": "stylelint \"**/*.{scss,css}\" --allow-empty-input",
+    "lint:prettier": "prettier --check .",
+    "lint:fix": "prettier --write . && eslint . --fix && stylelint \"**/*.{scss,css}\" --fix --allow-empty-input",
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
     "typecheck": "turbo run typecheck",
@@ -31,8 +34,41 @@
     "clean": "turbo run clean && rm -rf node_modules .turbo"
   },
   "devDependencies": {
+    "@pgpilot/eslint-config": "workspace:*",
+    "eslint": "^9.14.0",
     "prettier": "^3.3.3",
+    "stylelint": "^16.10.0",
+    "stylelint-config-standard-scss": "^13.1.0",
+    "stylelint-order": "^6.0.4",
     "turbo": "^2.2.3",
     "typescript": "^5.6.3"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "tabWidth": 2,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": false,
+    "trailingComma": "all",
+    "bracketSpacing": true,
+    "arrowParens": "always",
+    "endOfLine": "lf",
+    "overrides": [
+      {
+        "files": "*.md",
+        "options": {
+          "proseWrap": "preserve"
+        }
+      },
+      {
+        "files": [
+          "*.yaml",
+          "*.yml"
+        ],
+        "options": {
+          "singleQuote": false
+        }
+      }
+    ]
   }
 }

@@ -1,5 +1,5 @@
-import globals from "globals";
 import nPlugin from "eslint-plugin-n";
+import globals from "globals";
 
 import { baseConfig } from "./base.js";
 

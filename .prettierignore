@@ -1,0 +1,22 @@
+# Generated / lockfiles
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.turbo/
+coverage/
+storybook-static/
+
+# Docs specs (preserve original formatting)
+docs/specs/
+
+# Kotlin (handled by ktlint/detekt)
+services/orchestrator/
+
+# Node modules
+node_modules/

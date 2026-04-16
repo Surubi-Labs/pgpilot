@@ -2,16 +2,19 @@
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
   "globalDependencies": ["**/.env.*local", ".env", "tsconfig.base.json"],
+  "globalEnv": ["NODE_ENV", "CI", "VITEST", "LOG_LEVEL"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        "src/**",
-        "tsconfig*.json",
-        "package.json"
-      ],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**", "build/**", "out/**", "storybook-static/**"]
+      "inputs": ["$TURBO_DEFAULT$", "src/**", "tsconfig*.json", "package.json"],
+      "outputs": [
+        "dist/**",
+        ".next/**",
+        "!.next/cache/**",
+        "build/**",
+        "out/**",
+        "storybook-static/**"
+      ]
     },
     "dev": {
       "cache": false,
@@ -31,13 +34,7 @@
     },
     "test": {
       "dependsOn": ["^build"],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        "src/**",
-        "test/**",
-        "vitest.config.*",
-        "package.json"
-      ],
+      "inputs": ["$TURBO_DEFAULT$", "src/**", "test/**", "vitest.config.*", "package.json"],
       "outputs": ["coverage/**"]
     },
     "test:watch": {
@@ -46,12 +43,7 @@
     },
     "typecheck": {
       "dependsOn": ["^build"],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        "src/**",
-        "tsconfig*.json",
-        "package.json"
-      ]
+      "inputs": ["$TURBO_DEFAULT$", "src/**", "tsconfig*.json", "package.json"]
     },
     "clean": {
       "cache": false

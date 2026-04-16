@@ -14,7 +14,9 @@
     },
     "./tokens.css": "./src/tokens.css"
   },
-  "files": ["src"],
+  "files": [
+    "src"
+  ],
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",

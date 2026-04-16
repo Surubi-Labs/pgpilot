@@ -15,10 +15,7 @@ import {
   tokens,
 } from "./index.js";
 
-const tokensCss = readFileSync(
-  fileURLToPath(new URL("./tokens.css", import.meta.url)),
-  "utf8",
-);
+const tokensCss = readFileSync(fileURLToPath(new URL("./tokens.css", import.meta.url)), "utf8");
 
 describe("tokens — TS map", () => {
   it("exposes every top-level group", () => {
@@ -66,13 +63,7 @@ describe("tokens — TS map", () => {
 
   it("radius exposes all needed scales", () => {
     expect(Object.keys(radius)).toEqual(
-      expect.arrayContaining([
-        "radius-none",
-        "radius-sm",
-        "radius-md",
-        "radius-lg",
-        "radius-pill",
-      ]),
+      expect.arrayContaining(["radius-none", "radius-sm", "radius-md", "radius-lg", "radius-pill"]),
     );
   });
 
@@ -126,9 +117,7 @@ describe("tokens — CSS custom properties mirror the TS map", () => {
 
   it("honors prefers-reduced-motion by zeroing durations", () => {
     expect(tokensCss).toMatch(/@media\s*\(prefers-reduced-motion:\s*reduce\)/);
-    const reducedBlock = tokensCss.slice(
-      tokensCss.indexOf("prefers-reduced-motion"),
-    );
+    const reducedBlock = tokensCss.slice(tokensCss.indexOf("prefers-reduced-motion"));
     expect(reducedBlock).toMatch(/--pg-duration-normal:\s*0ms/);
   });
 });
