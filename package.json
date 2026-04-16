@@ -1,0 +1,38 @@
+{
+  "name": "pgpilot",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Durable workflows on your Postgres. No new infrastructure.",
+  "license": "MIT",
+  "author": "Juano Morello <me@juanomorello.dev>",
+  "homepage": "https://pgpilot.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SurubiLabs/pgpilot.git"
+  },
+  "packageManager": "pnpm@9.12.0",
+  "engines": {
+    "node": ">=20.9.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint --",
+    "lint:fix": "turbo run lint -- --fix",
+    "test": "turbo run test",
+    "test:watch": "turbo run test:watch",
+    "typecheck": "turbo run typecheck",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "infra:up": "docker compose -f docker/docker-compose.yml up -d",
+    "infra:down": "docker compose -f docker/docker-compose.yml down",
+    "infra:reset": "docker compose -f docker/docker-compose.yml down -v && pnpm infra:up",
+    "clean": "turbo run clean && rm -rf node_modules .turbo"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "turbo": "^2.2.3",
+    "typescript": "^5.6.3"
+  }
+}
