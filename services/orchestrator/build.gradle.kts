@@ -33,17 +33,26 @@ dependencies {
     // Spring Boot
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+    // Postgres driver
+    runtimeOnly("org.postgresql:postgresql")
 
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(module = "mockito-core")
     }
+    testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("com.ninja-squad:springmockk:4.0.2")
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:postgresql")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
+
+extra["testcontainers.version"] = "1.20.4"
 
 tasks.withType<Test> {
     useJUnitPlatform()
