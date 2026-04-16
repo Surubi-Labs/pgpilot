@@ -84,7 +84,7 @@ jobs:
         run: pnpm run infra:smoke
 
       - name: Turbo test
-        run: pnpm test -- --reporter=default
+        run: pnpm test
 
       - name: Turbo build
         run: pnpm build
