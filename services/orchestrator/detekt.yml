@@ -8,6 +8,18 @@ complexity:
   CyclomaticComplexMethod:
     active: true
     threshold: 20
+  LongParameterList:
+    active: true
+    # Factory fns for data classes with many fields (Run, Step) legitimately
+    # take 7-8 parameters. Interfaces/classes still capped lower.
+    functionThreshold: 8
+    constructorThreshold: 8
+  TooManyFunctions:
+    active: true
+    thresholdInInterfaces: 15
+    thresholdInClasses: 20
+    thresholdInEnums: 15
+    thresholdInObjects: 15
 
 style:
   MagicNumber:
