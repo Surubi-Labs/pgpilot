@@ -1,0 +1,90 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CI: "true"
+  TURBO_TELEMETRY_DISABLED: "1"
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.18.0
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Prettier
+        run: pnpm run lint:prettier
+
+      - name: ESLint
+        run: pnpm run lint:eslint
+
+      - name: Stylelint
+        run: pnpm run lint:stylelint
+
+  test:
+    name: test (postgres ${{ matrix.postgres }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        postgres: ["17.2"]
+
+    services:
+      postgres:
+        image: postgres:${{ matrix.postgres }}-alpine
+        env:
+          POSTGRES_USER: pgpilot
+          POSTGRES_PASSWORD: pgpilot
+          POSTGRES_DB: pgpilot
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U pgpilot -d pgpilot"
+          --health-interval=3s
+          --health-timeout=3s
+          --health-retries=20
+
+    env:
+      DATABASE_URL: postgres://pgpilot:pgpilot@localhost:5432/pgpilot
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.18.0
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Infra smoke
+        run: pnpm run infra:smoke
+
+      - name: Turbo test
+        run: pnpm test -- --reporter=default
+
+      - name: Turbo build
+        run: pnpm build
