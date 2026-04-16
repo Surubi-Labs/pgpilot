@@ -1,14 +1,15 @@
 -- ─────────────────────────────────────────────────────────────────────
 -- V0 — pgpilot schema baseline
 -- ─────────────────────────────────────────────────────────────────────
--- Creates the isolated `pgpilot` schema inside the customer's database.
--- Subsequent migrations (V1..VN) create tables, indexes, and triggers
--- inside this schema. Deprovisioning is a single DROP SCHEMA pgpilot
--- CASCADE, so operators can churn the schema without touching customer
--- data in other schemas.
+-- Flyway creates the target schema (see `createSchemas=true`); this
+-- migration just documents it. All subsequent migrations (V1..VN) create
+-- tables unqualified and rely on Flyway's search_path setup so the
+-- orchestrator can point at any schema name in the customer's database
+-- — defaulting to `pgpilot` but tunable per deployment.
+--
+-- Deprovisioning is a single `DROP SCHEMA <name> CASCADE`, so operators
+-- can churn the schema without touching customer data elsewhere.
 -- ─────────────────────────────────────────────────────────────────────
 
-CREATE SCHEMA IF NOT EXISTS pgpilot;
-
-COMMENT ON SCHEMA pgpilot IS
+COMMENT ON SCHEMA "${flyway:defaultSchema}" IS
     'PgPilot workflow orchestration schema. Managed by Flyway (V0..VN).';

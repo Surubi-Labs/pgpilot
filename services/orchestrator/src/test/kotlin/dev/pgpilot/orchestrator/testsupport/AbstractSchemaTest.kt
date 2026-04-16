@@ -45,6 +45,15 @@ abstract class AbstractSchemaTest : AbstractPgTest() {
         protected val jdbcTemplate: JdbcTemplate by lazy { JdbcTemplate(dataSource) }
 
         private fun runFlyway(ds: DataSource) {
+            // Drop any leftover state from an earlier JVM that reused the
+            // same Testcontainers DB. Gives every Gradle test run a
+            // deterministic clean slate before Flyway rebuilds the schema.
+            ds.connection.use { conn ->
+                conn.createStatement().use { stmt ->
+                    stmt.execute("DROP SCHEMA IF EXISTS $PGPILOT_SCHEMA CASCADE")
+                }
+            }
+
             Flyway
                 .configure()
                 .dataSource(ds)

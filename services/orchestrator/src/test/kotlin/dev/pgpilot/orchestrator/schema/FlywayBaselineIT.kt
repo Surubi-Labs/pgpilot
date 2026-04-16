@@ -8,33 +8,31 @@ import org.junit.jupiter.api.Test
 import java.sql.DriverManager
 
 /**
- * Runs the Flyway migrations from `db/migration` against the Testcontainers
- * Postgres instance and asserts the outcome: the `pgpilot` schema exists,
- * V0 is recorded in Flyway's history, and no orphan objects leaked into
- * `public`.
+ * Runs the full Flyway migration chain against a fresh schema on the shared
+ * Testcontainers Postgres and asserts baseline invariants that every migration
+ * must uphold:
+ *
+ * - the target schema is created,
+ * - the schema comment from V0 survives,
+ * - re-running migrate() is a no-op (idempotent).
+ *
+ * Each test uses its own schema name so parallel / interleaved suites don't
+ * observe each other's state.
  */
 class FlywayBaselineIT : AbstractPgTest() {
     @Test
-    fun `V0 baseline creates the pgpilot schema`() {
-        val flyway =
-            Flyway
-                .configure()
-                .dataSource(jdbcUrl, jdbcUser, jdbcPassword)
-                .schemas("pgpilot")
-                .createSchemas(true)
-                .locations("classpath:db/migration")
-                .load()
+    fun `migrate creates the pgpilot schema and preserves the baseline comment`() {
+        val schema = "flyway_baseline_${System.nanoTime()}"
+        val flyway = flywayFor(schema)
 
-        val result = flyway.migrate()
-        assertEquals(1, result.migrationsExecuted, "expected V0 to run exactly once")
+        flyway.migrate()
 
         DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword).use { conn ->
             conn.createStatement().use { stmt ->
                 stmt
-                    .executeQuery(
-                        "SELECT 1 FROM pg_namespace WHERE nspname = 'pgpilot'",
-                    ).use { rs ->
-                        assertTrue(rs.next(), "expected pgpilot schema to exist after migration")
+                    .executeQuery("SELECT 1 FROM pg_namespace WHERE nspname = '$schema'")
+                    .use { rs ->
+                        assertTrue(rs.next(), "expected $schema schema to exist")
                     }
 
                 stmt
@@ -42,7 +40,7 @@ class FlywayBaselineIT : AbstractPgTest() {
                         """
                         SELECT description FROM pg_namespace
                         JOIN pg_description d ON d.objoid = pg_namespace.oid
-                        WHERE nspname = 'pgpilot'
+                        WHERE nspname = '$schema'
                         """.trimIndent(),
                     ).use { rs ->
                         assertTrue(rs.next(), "expected schema comment to exist")
@@ -52,43 +50,35 @@ class FlywayBaselineIT : AbstractPgTest() {
                             "expected baseline comment, got: $comment",
                         )
                     }
-
-                stmt
-                    .executeQuery(
-                        """
-                        SELECT count(*) FROM information_schema.tables
-                        WHERE table_schema = 'pgpilot'
-                          AND table_name <> 'flyway_schema_history'
-                        """.trimIndent(),
-                    ).use { rs ->
-                        rs.next()
-                        assertEquals(
-                            0,
-                            rs.getInt(1),
-                            "V0 must only land the schema itself (plus flyway_schema_history); no user tables yet",
-                        )
-                    }
             }
         }
     }
 
     @Test
-    fun `running migrate twice is idempotent`() {
-        val flyway =
-            Flyway
-                .configure()
-                .dataSource(jdbcUrl, jdbcUser, jdbcPassword)
-                .schemas("pgpilot_twice")
-                .createSchemas(true)
-                .locations("classpath:db/migration")
-                .load()
+    fun `running migrate twice is a no-op`() {
+        val schema = "flyway_idempotent_${System.nanoTime()}"
+        val flyway = flywayFor(schema)
 
-        flyway.migrate()
+        val first = flyway.migrate()
         val second = flyway.migrate()
+
+        assertTrue(
+            first.migrationsExecuted > 0,
+            "first migrate should apply at least V0; got ${first.migrationsExecuted}",
+        )
         assertEquals(
             0,
             second.migrationsExecuted,
             "second migrate() should be a no-op; got ${second.migrationsExecuted}",
         )
     }
+
+    private fun flywayFor(schema: String): Flyway =
+        Flyway
+            .configure()
+            .dataSource(jdbcUrl, jdbcUser, jdbcPassword)
+            .schemas(schema)
+            .createSchemas(true)
+            .locations("classpath:db/migration")
+            .load()
 }
