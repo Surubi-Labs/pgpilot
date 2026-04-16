@@ -1,0 +1,21 @@
+/*
+ * Storybook preview baseline.
+ *
+ * Applies the token-driven typography + neutral surface to every story so
+ * components render on the real PgPilot canvas, not a default white body.
+ */
+html,
+body,
+#storybook-root {
+  background: var(--pg-neutral-0);
+  color: var(--pg-neutral-900);
+  font-family: var(--pg-font-sans);
+  font-size: var(--pg-text-base);
+  line-height: var(--pg-leading-normal);
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
