@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: pgpilot-orchestrator
+  threads:
+    virtual:
+      enabled: true
+
+server:
+  port: ${ORCHESTRATOR_PORT:8081}
+  shutdown: graceful
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized
+
+logging:
+  level:
+    root: INFO
+    dev.pgpilot: DEBUG

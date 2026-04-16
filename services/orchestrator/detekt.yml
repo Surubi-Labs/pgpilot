@@ -1,0 +1,37 @@
+complexity:
+  LongMethod:
+    active: true
+    threshold: 80
+  LargeClass:
+    active: true
+    threshold: 600
+  CyclomaticComplexMethod:
+    active: true
+    threshold: 20
+
+style:
+  MagicNumber:
+    active: false
+  ReturnCount:
+    active: true
+    max: 4
+  WildcardImport:
+    active: true
+    excludes: []
+
+performance:
+  # Spring Boot entry point uses `runApplication<App>(*args)` idiomatically.
+  SpreadOperator:
+    active: false
+
+naming:
+  FunctionNaming:
+    active: true
+  ClassNaming:
+    active: true
+
+exceptions:
+  TooGenericExceptionCaught:
+    active: true
+  SwallowedException:
+    active: true
