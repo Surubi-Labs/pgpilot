@@ -2,7 +2,7 @@
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
   "globalDependencies": ["**/.env.*local", ".env", "tsconfig.base.json"],
-  "globalEnv": ["NODE_ENV", "CI", "VITEST", "LOG_LEVEL"],
+  "globalEnv": ["NODE_ENV", "CI", "VITEST", "LOG_LEVEL", "DATABASE_URL"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
