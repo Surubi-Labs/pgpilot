@@ -89,6 +89,16 @@ jobs:
       - name: Turbo build
         run: pnpm build
 
+      - name: Storybook build
+        run: pnpm --filter @pgpilot/storybook build
+
+      - name: Upload Storybook artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: storybook-static
+          path: apps/storybook/storybook-static/
+          retention-days: 7
+
   kotlin:
     name: kotlin (orchestrator, postgres ${{ matrix.postgres }})
     runs-on: ubuntu-latest
