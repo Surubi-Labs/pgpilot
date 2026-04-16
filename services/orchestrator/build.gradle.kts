@@ -37,6 +37,9 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
+    // UUIDs (v7 time-ordered)
+    implementation("com.fasterxml.uuid:java-uuid-generator:5.1.0")
+
     // Migrations
     implementation("org.flywaydb:flyway-core")
     implementation("org.flywaydb:flyway-database-postgresql")
