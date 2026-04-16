@@ -1,0 +1,84 @@
+# ───────────────── Node / pnpm ─────────────────
+node_modules/
+.pnpm-store/
+.pnpm-debug.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.yarn/
+.npm/
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.turbo/
+.vercel/
+.swc/
+storybook-static/
+coverage/
+*.tsbuildinfo
+
+# ───────────────── Env & secrets ─────────────────
+.env
+.env.*
+!.env.example
+!.env.vault
+*.pem
+*.key
+secrets/
+
+# ───────────────── Gradle / JVM ─────────────────
+.gradle/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/**/build/
+out/
+bin/
+
+# IntelliJ / Eclipse / VSCode
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.recommended.json
+*.swp
+.project
+.classpath
+.settings/
+
+# Kotlin
+*.kotlin_module
+
+# Testing / coverage
+.nyc_output/
+junit.xml
+test-results/
+playwright-report/
+playwright/.cache/
+
+# ───────────────── macOS / editors ─────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# ───────────────── Docker ─────────────────
+.docker/
+*.local.yml
+
+# ───────────────── Misc ─────────────────
+*.log
+.cache/
+.tmp/
+tmp/
+
+# ───────────────── Claude Code (local only) ─────────────────
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+.claude/sessions/
+.claude/.session/
+.claude/history/
