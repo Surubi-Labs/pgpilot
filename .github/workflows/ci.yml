@@ -99,14 +99,9 @@ jobs:
           path: apps/storybook/storybook-static/
           retention-days: 7
 
-  kotlin:
-    name: kotlin (orchestrator, postgres ${{ matrix.postgres }})
+  kotlin-lint:
+    name: kotlin lint (ktlint + detekt)
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        postgres: ["17.2"]
-
     defaults:
       run:
         working-directory: services/orchestrator
@@ -131,6 +126,42 @@ jobs:
       - name: detekt
         run: ./gradlew detekt --no-daemon --stacktrace
 
+  kotlin-test:
+    name: kotlin test (postgres ${{ matrix.postgres }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Each entry drives both the image Testcontainers uses (via the
+        # TESTCONTAINERS_POSTGRES_IMAGE env var read by AbstractPgTest) and
+        # the upload artifact name so failures are attributable.
+        postgres:
+          - "14.15-alpine"
+          - "15.10-alpine"
+          - "16.6-alpine"
+          - "17.2-alpine"
+
+    defaults:
+      run:
+        working-directory: services/orchestrator
+
+    env:
+      TESTCONTAINERS_POSTGRES_IMAGE: postgres:${{ matrix.postgres }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: corretto
+          java-version: "21"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-read-only: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}
+
       - name: Test (Testcontainers Postgres ${{ matrix.postgres }})
         run: ./gradlew test --no-daemon --stacktrace
 
@@ -138,6 +169,6 @@ jobs:
         if: ${{ failure() }}
         uses: actions/upload-artifact@v4
         with:
-          name: orchestrator-test-reports
+          name: orchestrator-test-reports-${{ matrix.postgres }}
           path: services/orchestrator/build/reports/
           retention-days: 7
